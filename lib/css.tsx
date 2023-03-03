@@ -33,10 +33,14 @@ export function GlobalStyleProvider({
   );
 }
 
+function camelCaseToKebabCase(str: string) {
+  return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
+}
+
 function toCSS(styles: Styles, name: string) {
   return `.${name} { ${Object.keys(styles[name])
     // @ts-ignore
-    .map((k) => `${k}: ${styles[name][k]};`)
+    .map((k) => `${camelCaseToKebabCase(k)}: ${styles[name][k]};`)
     .join("")} }`;
 }
 
